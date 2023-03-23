@@ -41,6 +41,21 @@ const UserSchema = new mongoose.Schema({
     max: 255
   },
 
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+
+  resetPasswordToken: {
+    type: String,
+    required: false
+  },
+
+  resetPasswordExpires: {
+    type: Date,
+    required: false
+  }
+
 }, { timestamps: true });
 
 
@@ -83,5 +98,4 @@ UserSchema.methods.generateJWT = function () {
   });
 };
 
-mongoose.set('useFindAndModify', false);
 module.exports = mongoose.model('Users', UserSchema);

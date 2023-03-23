@@ -1,12 +1,12 @@
+
 const User = require('../models/user');
-const {uploader, sendEmail} = require('../utils/index');
 
 
 // @route GET api/user
 // @desc Returns all users
 // @access Public
 exports.index = async function (req, res) {
-  const users = await User.find({});
+  const users = await User.find({}).select('-password');
   res.status(200).json({ users });
 };
 
@@ -32,17 +32,6 @@ exports.store = async (req, res) => {
 
     // Save the updated user object
     await user_.save();
-
-    // Get mail options
-    let domain = "http://" + req.headers.host;
-    let subject = "New Account Created";
-    let to = user.email;
-    let from = process.env.FROM_EMAIL;
-    let link = "http://" + req.headers.host + "/api/auth/reset/" + user.resetPasswordToken;
-    let html = `<p>Hi ${user.username}<p><br><p>A new account has been created for you on ${domain}. Please click on the following <a href="${link}">link</a> to set your password and login.</p> 
-                  <br><p>If you did not request this, please ignore this email.</p>`
-
-    await sendEmail({ to, from, subject, html });
 
     res.status(200).json({ message: 'An email has been sent to ' + user.email + '.' });
 
@@ -82,15 +71,7 @@ exports.update = async function (req, res) {
 
     const user = await User.findByIdAndUpdate(id, { $set: update }, { new: true });
 
-    //if there is no image, return success message
-    if (!req.file) return res.status(200).json({ user, message: 'User has been updated' });
-
-    //Attempt to upload to cloudinary
-    const result = await uploader(req);
-    const user_ = await User.findByIdAndUpdate(id, { $set: update }, { $set: { profileImage: result.url } }, { new: true });
-
-    if (!req.file) return res.status(200).json({ user: user_, message: 'User has been updated' });
-
+    return res.status(200).json({ user, message: 'User has been updated' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

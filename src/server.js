@@ -21,8 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 //=== 2 - SET UP DATABASE
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
-mongoose.connect(connUri, { useNewUrlParser: true, useCreateIndex: true });
-
+mongoose.connect(connUri, { useNewUrlParser: true });
 
 const connection = mongoose.connection;
 connection.once('open', () => console.log('MongoDB --  database connection established successfully!'));
