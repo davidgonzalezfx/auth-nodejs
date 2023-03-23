@@ -1,0 +1,12 @@
+## Build
+node_modules
+dist
+.vscode
+
+## Env
+.env
+.env.local
+
+## Testing
+jestResults
+coverage
