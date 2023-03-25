@@ -36,24 +36,6 @@ exports.recover = async (req, res) => {
 };
 
 // @route POST api/auth/reset
-// @desc Reset Password - Validate password reset token and shows the password reset view
-// @access Public
-exports.reset = async (req, res) => {
-  try {
-    const { token } = req.params;
-
-    const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } });
-
-    if (!user) return res.status(401).json({ message: 'Password reset token is invalid or has expired.' });
-
-    //Redirect user to form with the email address
-    res.render('reset', { user });
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
-};
-
-// @route POST api/auth/reset
 // @desc Reset Password
 // @access Public
 exports.resetPassword = async (req, res) => {
