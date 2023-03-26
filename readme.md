@@ -98,6 +98,7 @@ The code base was built with [Express](https://expressjs.com/) to set up the ser
 - [ ] Eslint & prettier
 - [ ] Javascript modules (?)
 - [ ] Typescript
+- [ ] MongoDB initial demo script
 - [ ] Check security gaps
 - [ ] Connect or extend with frontend (React) app
 - [ ] Deploy
