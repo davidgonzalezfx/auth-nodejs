@@ -93,8 +93,7 @@ The code base was built with [Express](https://expressjs.com/) to set up the ser
 - [x] API routes
 - [x] Constraint register and login for verified users
 - [x] Recover and reset password routes
-- [ ] Replace callbacks with async/await
-- [ ] Error handling
+- [ ] Clean code
 - [ ] Git commit hook 
 - [ ] Eslint & prettier
 - [ ] Javascript modules (?)

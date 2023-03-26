@@ -11,14 +11,13 @@ const opts = {
 module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
-      User.findById(jwt_payload.id)
-        .then(user => {
-          if (user) return done(null, user);
-          return done(null, false);
-        })
-        .catch(err => {
-          return done(err, false, { message: 'Server Error - Authentication Error' });
-        });
+      try {
+        const user = await User.findById(jwt_payload.id)
+        if (user) return done(null, user);
+        return done(null, false);
+      } catch (err) {
+        return done(err, false, { message: 'Server Error - Authentication Error' });
+      }
     })
   );
 };
